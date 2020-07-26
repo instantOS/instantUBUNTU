@@ -1,0 +1,9 @@
+[submodule "instawm"]
+	path = instawm
+	url = ./instawm/
+[submodule "instantDEB"]
+	path = instantDEB
+	url = ./instantDEB/
+[submodule "instantOS"]
+	path = instantOS
+	url = ./instantOS/
