@@ -44,6 +44,8 @@ aptPackages() {
 instantOSPackages() {
       git submodule update --init --recursive
       cd-do instawm/ make install -j$(nproc)
+      cd-do instantDEB/ ./make.sh download
+      cd-do instantDEB/ ./make.sh unpack
       cd-do instantDEB/ cp -r usr /usr
       cd-do instantDEB/ cp -r etc /etc
 }

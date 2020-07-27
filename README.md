@@ -9,5 +9,5 @@ a community edition of instantOS based on Ubuntu [「中文」](读我.md)
 
   ```
      git clone https://github.com/instantOS/instantUBUNTU.git
-     cd instantUBUNTU && ./make.sh download
+     cd instantUBUNTU && sudo ./make.sh install
   ```
