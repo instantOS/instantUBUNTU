@@ -34,9 +34,16 @@ aptPackages() {
 
 instantOSPackages() {
       git submodule update --init --recursive
-      # cp instantOS/imenu.sh /usr/bin/imenu
-      # chmod 755 /usr/bin/imenu
-      cd instawm/ && make -j$(nproc) && make install && cd -
+      cd-do instawm/ make install -j$(nproc)
+      cd-do instantDEB/ cp -r usr /usr
+      cd-do instantDEB/ cp -r etc /etc
+}
+
+cd-do() {
+    cd "$1"
+    shift 1
+    "$@"
+    cd - >&
 }
 
 # read from stdin
