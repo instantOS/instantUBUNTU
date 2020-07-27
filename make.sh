@@ -9,24 +9,23 @@ install() {
     fi
     logdo echo "instantOS Installation Begin"
     {
-
         logdo download aptPackages
-        logdo download instantOSPackages
         logdo compile
-
-    } |& echo_progess
+        logdo download instantOSPackages
+    }
 }
 
 download() {
     while ! "$@"
     do
-        echo "[Info][downloading packages failed, please reconnect to internet]"
+        echo "[instantOS][downloading packages failed, please reconnect to internet]"
         sleep 10
     done
 }
 
 aptPackages() {
     apt install -y fzf expect git os-prober dialog imvirt lshw bash curl python3-tqdm
+    apt install -y dunst lxpolkit xdotool compton
     apt install -y mpv mpd mpc slop maim mupdf xwallpaper #muti-media
     apt install -y scite # gui super lightweight gui text editor (alt. featherpad)
     apt install -y fcitx fcitx-libpinyin # input method framework
@@ -37,6 +36,7 @@ instantOSPackages() {
       git submodule update --init --recursive
       # cp instantOS/imenu.sh /usr/bin/imenu
       # chmod 755 /usr/bin/imenu
+      cd instawm/ && make -j$(nproc) && make install && cd -
 }
 
 # read from stdin
@@ -47,9 +47,9 @@ echo_progess() {
 from tqdm import tqdm
 import time
 import fileinput
-t = tqdm(fileinput.input(), desc="Progress", total=2)
+t = tqdm(fileinput.input(), desc="Progress", total=70)
 for text in t:
-    if text.startswith('[Info]'):
+    if text.startswith('[instantOS]'):
         t.write(text.strip())
 EOF
 )
@@ -63,9 +63,9 @@ EOF
 logdo() {
     if test "$1" != echo
     then
-        local -r message=$(echo [Info][$(date -I)-$(date +"%T.%3N")] "$@")
+        local -r message=$(echo [instantOS][$(date -I)-$(date +"%T.%3N")] "$@")
         echo -n "$message" | tee -a "$logfile" ; echo >> "$logfile"
-        "$@" |& tee -a $logfile &
+        "$@" >> $logfile 2>&1  &
         local -r pid="$!"
         spinner "$pid"
         echo
@@ -73,7 +73,7 @@ logdo() {
         return $?
     else
         shift 1
-        local -r message=$(echo [Info][$(date -I).$(date +"%T.%3N")] "$@")
+        local -r message=$(echo [instantOS][$(date -I).$(date +"%T.%3N")] "$@")
         echo "$message" | tee "$logfile"
     fi
 }
