@@ -7,25 +7,34 @@ install() {
         echo "requires root access to install packages"
         exit
     fi
-    logdo echo "instantOS Installation Begin"
+    rm -f "$logfile" && touch "$logfile"
+    logdo "instantOS Installation Begin"
+    # Tasks
     {
-        logdo download aptPackages
-        logdo compile
-        logdo download instantOSPackages
-    }
+        download aptPackages
+        compile instantOSPackages
+    } |& echo_progess
 }
 
 download() {
-    while ! "$@"
+    while ! logdo Download "$@"
     do
-        echo "[instantOS][downloading packages failed, please reconnect to internet]"
+        echo "[instantOS][Error: downloading packages failed, please reconnect to internet]"
+        sleep 10
+    done
+}
+
+compile() {
+    while ! logdo Compile "$@"
+    do
+        echo "[instantOS][Error: fail to process instantOS package file, please review $logfile]"
         sleep 10
     done
 }
 
 aptPackages() {
     apt install -y fzf expect git os-prober dialog imvirt lshw bash curl python3-tqdm
-    apt install -y dunst lxpolkit xdotool compton
+    apt install -y dunst lxpolkit xdotool compton lightdm
     apt install -y mpv mpd mpc slop maim mupdf xwallpaper #muti-media
     apt install -y scite # gui super lightweight gui text editor (alt. featherpad)
     apt install -y fcitx fcitx-libpinyin # input method framework
@@ -43,7 +52,7 @@ cd-do() {
     cd "$1"
     shift 1
     "$@"
-    cd - >&
+    cd - >& /dev/null
 }
 
 # read from stdin
@@ -54,7 +63,7 @@ echo_progess() {
 from tqdm import tqdm
 import time
 import fileinput
-t = tqdm(fileinput.input(), desc="Progress", total=70)
+t = tqdm(fileinput.input(), desc="Progress", total=2)
 for text in t:
     if text.startswith('[instantOS]'):
         t.write(text.strip())
@@ -66,22 +75,23 @@ EOF
 }
 
 # log and does the operation
-# log cmd/function
+# log description cmd/function
 logdo() {
-    if test "$1" != echo
+    local -r desc="$1"
+    shift 1
+    local -r cmd="$@"
+    local -r message=$(echo [instantOS][$(date -I)-$(date +"%T.%3N")] "$desc" "$cmd")
+    echo -n "$message" | tee -a "$logfile" ; echo >> "$logfile"
+    if test ! -z "$cmd"
     then
-        local -r message=$(echo [instantOS][$(date -I)-$(date +"%T.%3N")] "$@")
-        echo -n "$message" | tee -a "$logfile" ; echo >> "$logfile"
-        "$@" >> $logfile 2>&1  &
+        "$cmd" >> $logfile 2>&1  &
         local -r pid="$!"
         spinner "$pid"
         echo
         wait "$pid" #capture exit code
         return $?
     else
-        shift 1
-        local -r message=$(echo [instantOS][$(date -I).$(date +"%T.%3N")] "$@")
-        echo "$message" | tee "$logfile"
+        echo
     fi
 }
 
@@ -96,7 +106,7 @@ spinner() {
         printf "\b"
         sleep .1
     done
-    printf "\b... Done"
+    printf "\b ..."
     tput cnorm
 }
 
