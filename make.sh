@@ -7,7 +7,7 @@ install() {
         echo "requires root access to install packages"
         exit
     fi
-    echo > "$logfile" 
+    echo > "$logfile"
     logdo "Installation Begin @ $(date -I)-$(date +"%T.%3N")"
     # Tasks
     {
@@ -61,11 +61,11 @@ aptPackages() {
 }
 
 terminal() {
-    apt install -y gnome-terminal
+    apt install -y xterm
 }
 
 media-player() {
-    apt install -y mpv mpd mpc slop maim mupdf xwallpaper #muti-media
+    apt install -y mpv slop maim mupdf xwallpaper #muti-media
 }
 
 text-editor() {
@@ -97,6 +97,8 @@ instantOSPackages() {
       cd_do src/xmenu/ make install -j$(nproc)
       cd_do src/instantDEB/ cp -r usr /usr
       cd_do src/instantDEB/ cp -r etc /etc
+      cd_do ./ cp xprofile ~/.xprofile
+      cd_do ./ cp Xresources ~/.Xresources
 }
 
 cd_do() {

@@ -1,0 +1,17 @@
+xrdb ~/.Xresources
+
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+pkill fcitx
+fcitx 2>/dev/null &
+
+setxkbmap -option
+setxkbmap -option caps:escape
+
+BACKGROUND=NihonJin.jpg
+[ -f "$BACKGROUND" ] && xwallpaper --zoom "$BACKGROUND"
+
+xsetroot -name "$(LANG=zh_CN.utf8 date)"
+
+# vim: set ft=sh :

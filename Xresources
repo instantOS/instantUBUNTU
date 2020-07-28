@@ -1,0 +1,165 @@
+!Lucario Theme
+!BLK Cursor
+#define lucario_color0        #4f4f4f
+#define lucario_color8        #4f4f4f
+!RED Tag
+#define lucario_color1        #ff6c60
+#define lucario_color9        #fa6960
+!GRN SpecialKey
+#define lucario_color2        #fbb036
+#define lucario_color10       #fbb036
+!YEL Keyword
+#define lucario_color3        #ffffb6
+#define lucario_color11       #feffb9
+!BLU Number
+#define lucario_color4        #5796ed
+#define lucario_color12       #6b9fed
+!MAG Precondit
+#define lucario_color5        #ff73fd
+#define lucario_color13       #fc6ffa
+!CYN Float
+#define lucario_color6        #8ee478
+#define lucario_color14       #8ee478
+!WHT Search
+#define lucario_color7        #eeeeee
+#define lucario_color15       #ffffff
+!FMT Include, StatusLine, ErrorMsg
+#define lucario_colorBD       #ffffff
+#define lucario_colorUL       #ffffff
+#define lucario_colorIT       #ffffff
+!TXT Normal, Normal, Cursor
+#define lucario_foreground    #f8f8f2
+#define lucario_background    #2b3e50
+#define lucario_cursorColor   #e3bf21
+
+!Sublime Monokai Theme
+! black
+#define monokai_color0    #272822
+#define monokai_color8    #75715e
+! red
+#define monokai_color1    #f92672
+#define monokai_color9    #f92672
+! green
+#define monokai_color2    #a6e22e
+#define monokai_color10   #a6e22e
+! yellow
+#define monokai_color3    #f4bf75
+#define monokai_color11   #f4bf75
+! blue
+#define monokai_color4    #66d9ef
+#define monokai_color12   #66d9ef
+! magenta
+#define monokai_color5    #ae81ff
+#define monokai_color13   #ae81ff
+! cyan
+#define monokai_color6    #a1efe4
+#define monokai_color14   #a1efe4
+! white
+#define monokai_color7    #f8f8f2
+#define monokai_color15   #f9f8f5
+!FMT Include, StatusLine, ErrorMsg
+#define monokai_colorBD       #ffffff
+#define monokai_colorUL       #ffffff
+#define monokai_colorIT       #ffffff
+!TXT Normal, Normal, Cursor
+#define monokai_foreground    #d1d1d1
+#define monokai_background    #221e2d
+#define monokai_cursorColor   #e3bf21
+
+*.color0         : monokai_color0
+*.color1         : monokai_color1
+*.color2         : monokai_color2
+*.color3         : monokai_color3
+*.color4         : monokai_color4
+*.color5         : monokai_color5
+*.color6         : monokai_color6
+*.color7         : monokai_color7
+*.color8         : monokai_color8
+*.color9         : monokai_color9
+*.color10        : monokai_color10
+*.color11        : monokai_color11
+*.color12        : monokai_color12
+*.color13        : monokai_color13
+*.color14        : monokai_color14
+*.color15        : monokai_color15
+*.colorBD        : monokai_colorBD
+*.colorIT        : monokai_colorIT
+*.colorUL        : monokai_colorUL
+*.foreground     : monokai_foreground
+*.background     : monokai_background
+*.cursorColor    : monokai_cursorColor
+
+xterm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
+xterm*termName: xterm-color
+xterm*eightBitInput: false
+
+Xft.dpi: 192
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintslight
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+
+*.font: mono:pixelsize=28:antialias=true:autohint=true:dpi=192
+*.font2: mono:pixelsize=24:antialias=true:autohint=true:dpi=192
+
+*.font1: UbuntuMono Nerd Font Mono:monospace:size=9
+
+/* xmenu.font: Ubuntu Mono:style=Regular */
+/* xmenu.font: DejaVuSansMono.ttf: DejaVu Sans Mono:style=Book */
+/* xmenu.font: Noto Sans Mono CJK SC:style=Regular */
+/* xmenu.font: YaHei Consolas Hybrid:style=YaHei Consolas Hybrid Regular */
+xmenu.font: Ubuntu Mono:style=Regular
+/* xmenu.background: */ 
+/* xmenu.foreground: */ 
+/* xmenu.selbackground: */ 
+/* xmenu.selforeground: */ 
+/* xmenu.border: */ 
+/* xmenu.separator: */ 
+/* xmenu.gap: */ 
+/* xmenu.width: */ 
+/* xmenu.height: */ 
+/* xmenu.borderWidth: */ 
+/* xmenu.separatorWidth: */ 
+
+
+
+! Use a nice truetype font and size by default...
+xterm*faceName: Ubuntu Mono
+xterm*faceSize: 12
+
+! Every shell is a login shell by default (for inclusion of all necessary environment variables)
+xterm*loginshell: true
+
+! I like a LOT of scrollback...
+xterm*savelines: 16384
+
+! double-click to select whole URLs :D
+xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+
+! DOS-box colours...
+xterm*foreground: rgb:a8/a8/a8
+xterm*background: rgb:00/00/00
+xterm*color0: rgb:00/00/00
+xterm*color1: rgb:a8/00/00
+xterm*color2: rgb:00/a8/00
+xterm*color3: rgb:a8/54/00
+xterm*color4: rgb:00/00/a8
+xterm*color5: rgb:a8/00/a8
+xterm*color6: rgb:00/a8/a8
+xterm*color7: rgb:a8/a8/a8
+xterm*color8: rgb:54/54/54
+xterm*color9: rgb:fc/54/54
+xterm*color10: rgb:54/fc/54
+xterm*color11: rgb:fc/fc/54
+xterm*color12: rgb:54/54/fc
+xterm*color13: rgb:fc/54/fc
+xterm*color14: rgb:54/fc/fc
+xterm*color15: rgb:fc/fc/fc
+
+! stop output to terminal from jumping down to bottom of scroll again
+xterm*scrollTtyOutput: false
+
+
+! vim: set ft=xdefaults :
