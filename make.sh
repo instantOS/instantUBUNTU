@@ -20,7 +20,7 @@ install() {
         download aptPackages
         download instantOSFiles
         compile  instantOSPackages
-    } |& tqdm --tee --total 9 --desc "Progress" > /dev/null
+    } |& echo_progess
 }
 
 download() {
@@ -91,6 +91,15 @@ cd_do() {
     shift 1
     "$@"
     cd - >& /dev/null
+}
+
+# read from stdin
+echo_progess() {
+    if command -v tqdm >& /dev/null ; then
+        tqdm --tee --total 8 --desc "Progress" > /dev/null
+    else
+        xargs -l1 echo
+    fi
 }
 
 # log and does the operation
