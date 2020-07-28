@@ -57,11 +57,7 @@ bootstrap() {
 
 aptPackages() {
     apt install -y fzf expect git os-prober dialog imvirt lshw bash curl
-    apt install -y dunst lxpolkit xdotool compton
-}
-
-terminal() {
-    apt install -y xterm
+    apt install -y dunst lxpolkit xdotool compton xterm
 }
 
 media-player() {
