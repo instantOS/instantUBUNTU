@@ -18,8 +18,9 @@ install() {
         download input-method
         download build-tools
         download aptPackages
-        compile instantOSPackages
-    } |& echo_progess
+        download instantOSFiles
+        compile  instantOSPackages
+    } |& tqdm --tee --total 9 --desc "Progress" > /dev/null
 }
 
 download() {
@@ -42,6 +43,7 @@ bootstrap() {
     apt update
     # apt install python3-tqdm
     pip3 install -U 'git+https://github.com/tqdm/tqdm@cli-tee#egg=tqdm'
+    git submodule update --init --recursive
 }
 
 aptPackages() {
@@ -72,13 +74,16 @@ build-tools() {
     apt install -y libimlib2-dev
 }
 
+instantOSFiles() {
+      cd_do src/instantDEB/ ./make.sh download
+      cd_do src/instantDEB/ ./make.sh unpack
+}
+
 instantOSPackages() {
-      git submodule update --init --recursive
-      cd_do instawm/ make install -j$(nproc)
-      cd_do instantDEB/ ./make.sh download
-      cd_do instantDEB/ ./make.sh unpack
-      cd_do instantDEB/ cp -r usr /usr
-      cd_do instantDEB/ cp -r etc /etc
+      cd_do src/instaWM/ make install -j$(nproc)
+      cd_do src/xmenu/ make install -j$(nproc)
+      cd_do src/instantDEB/ cp -r usr /usr
+      cd_do src/instantDEB/ cp -r etc /etc
 }
 
 cd_do() {
@@ -86,15 +91,6 @@ cd_do() {
     shift 1
     "$@"
     cd - >& /dev/null
-}
-
-# read from stdin
-echo_progess() {
-    if command -v tqdm >& /dev/null ; then
-        tqdm --tee --total 8 --desc "Progress" > /dev/null
-    else
-        xargs -l1 echo
-    fi
 }
 
 # log and does the operation

@@ -3,7 +3,7 @@
 	url = https://github.com/instantOS/instantMENU.git
 [submodule "src/instantWM"]
 	path = src/instantWM
-	url = https://github.com/instantOS/instantWM.git
+	url = https://github.com/Piping/instantWM.git
 [submodule "src/instantLOCK"]
 	path = src/instantLOCK
 	url = https://github.com/instantOS/instantLOCK.git
