@@ -1,3 +1,81 @@
-[submodule "xmenu"]
-	path = xmenu
-	url = git@github.com:piping/xmenu.git
+[submodule "src/instantMENU"]
+	path = src/instantMENU
+	url = https://github.com/instantOS/instantMENU.git
+[submodule "src/instantWM"]
+	path = src/instantWM
+	url = https://github.com/instantOS/instantWM.git
+[submodule "src/instantLOCK"]
+	path = src/instantLOCK
+	url = https://github.com/instantOS/instantLOCK.git
+[submodule "src/dragon"]
+	path = src/dragon
+	url = https://github.com/mwh/dragon
+[submodule "src/bash"]
+	path = src/bash
+	url = https://github.com/paperbenni/bash.git
+[submodule "src/instantASSIST"]
+	path = src/instantASSIST
+	url = https://github.com/instantOS/instantASSIST.git
+[submodule "src/dotfiles"]
+	path = src/dotfiles
+	url = https://github.com/paperbenni/dotfiles.git
+[submodule "src/instantMETA"]
+	path = src/instantMETA
+	url = https://github.com/instantOS/instantMETA.git
+[submodule "src/instantNOTIFY"]
+	path = src/instantNOTIFY
+	url = https://github.com/instantOS/instantNOTIFY.git
+[submodule "src/instantSUPPORT"]
+	path = src/instantSUPPORT
+	url = https://github.com/instantOS/instantSUPPORT.git
+[submodule "src/instantOS"]
+	path = src/instantOS
+	url = https://github.com/instantOS/instantOS.git
+[submodule "src/cursors"]
+	path = src/cursors
+	url = https://github.com/paperbenni/cursors.git
+[submodule "src/instantWALLPAPER"]
+	path = src/instantWALLPAPER
+	url = https://github.com/instantOS/instantWALLPAPER.git
+[submodule "src/instantTOOLS"]
+	path = src/instantTOOLS
+	url = https://github.com/instantOS/instantTOOLS.git
+[submodule "src/islide"]
+	path = src/islide
+	url = https://github.com/instantOS/islide.git
+[submodule "src/instantwidgets"]
+	path = src/instantwidgets
+	url = https://github.com/instantOS/instantwidgets.git
+[submodule "src/instantsettings"]
+	path = src/instantsettings
+	url = https://github.com/instantOS/instantsettings.git
+[submodule "src/instantconf"]
+	path = src/instantconf
+	url = https://github.com/instantOS/instantconf.git
+[submodule "src/imenu"]
+	path = src/imenu
+	url = https://github.com/instantOS/imenu.git
+[submodule "src/sideload"]
+	path = src/sideload
+	url = https://github.com/elementary/sideload.git
+[submodule "src/instantshell"]
+	path = src/instantshell
+	url = https://github.com/instantOS/instantshell.git
+[submodule "src/mpm"]
+	path = src/mpm
+	url = https://github.com/paperbenni/mpm.git
+[submodule "src/snap-dummy"]
+	path = src/snap-dummy
+	url = https://github.com/instantOS/snap-dummy.git
+[submodule "src/grub-instantos"]
+	path = src/grub-instantos
+	url = https://github.com/instantOS/grub-instantos.git
+[submodule "src/instantwelcome"]
+	path = src/instantwelcome
+	url = https://github.com/instantOS/instantwelcome.git
+[submodule "src/liveutils"]
+	path = src/liveutils
+	url = https://github.com/instantOS/liveutils.git
+[submodule "src/instantthemes"]
+	path = src/instantthemes
+	url = https://github.com/instantOS/instantthemes.git
