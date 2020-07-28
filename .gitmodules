@@ -1,12 +1,3 @@
-[submodule "instawm"]
-	path = instawm
-	url = ./instawm/
-[submodule "instantDEB"]
-	path = instantDEB
-	url = ./instantDEB/
-[submodule "instantOS"]
-	path = instantOS
-	url = ./instantOS/
 [submodule "xmenu"]
 	path = xmenu
-	url = ./xmenu/
+	url = ins:piping/xmenu.git
