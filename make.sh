@@ -4,7 +4,7 @@ logfile="log.install.log"
 
 install() {
     if ! whoami | grep -iq '^root'; then
-        echo "requires root access to install packages"
+        sudo echo || echo "requires root access to install packages"
         exit
     fi
     echo > "$logfile"
@@ -49,38 +49,38 @@ compile() {
 }
 
 bootstrap() {
-    apt update
-    apt install -y python3-pip
+    sudo apt update
+    sudo apt install -y python3-pip
     pip3 install -U 'git+https://github.com/tqdm/tqdm@cli-tee#egg=tqdm'
     git submodule update --init --recursive
 }
 
 aptPackages() {
-    apt install -y fzf expect git os-prober dialog imvirt lshw bash curl
-    apt install -y dunst lxpolkit xdotool compton xterm
+    sudo apt install -y fzf expect git os-prober dialog imvirt lshw bash curl
+    sudo apt install -y dunst lxpolkit xdotool compton xterm
 }
 
 media-player() {
-    apt install -y mpv slop maim mupdf xwallpaper #muti-media
+    sudo apt install -y mpv slop maim mupdf xwallpaper #muti-media
 }
 
 text-editor() {
-    apt install vim
-    apt install -y scite # gui super lightweight gui text editor (alt. featherpad)
+    sudo apt install vim
+    sudo apt install -y scite # gui super lightweight gui text editor (alt. featherpad)
 }
 
 input-method() {
-    apt install -y fcitx fcitx-libpinyin # input method framework
+    sudo apt install -y fcitx fcitx-libpinyin # input method framework
 }
 
 download-tools() {
-    apt install curl wget
+    sudo apt install curl wget
 }
 
 build-tools() {
     # for tools need be compiled from sources (e.g. windows manager)
-    apt install -y build-essential libx11-dev xorg-dev
-    apt install -y libimlib2-dev
+    sudo apt install -y build-essential libx11-dev xorg-dev
+    sudo apt install -y libimlib2-dev
 }
 
 instantOSFiles() {
@@ -89,10 +89,10 @@ instantOSFiles() {
 }
 
 instantOSPackages() {
-      cd_do src/instantWM/ make install -j$(nproc)
-      cd_do src/xmenu/ make install -j$(nproc)
-      cd_do src/instantDEB/ cp -r usr /usr
-      cd_do src/instantDEB/ cp -r etc /etc
+      cd_do src/instantWM/ sudo make install -j$(nproc)
+      cd_do src/xmenu/ sudo make install -j$(nproc)
+      cd_do src/instantDEB/ sudo cp -r usr /usr
+      cd_do src/instantDEB/ sudo cp -r etc /etc
       cd_do ./ cp xprofile ~/.xprofile
       cd_do ./ cp Xresources ~/.Xresources
 }
@@ -148,7 +148,7 @@ trap restoreState EXIT
 
 if [ -z $1 ] ; then
     echo "Usage:"
-    echo "sudo ./make.sh install"
+    echo "./make.sh install"
 else
     "$@"
 fi
