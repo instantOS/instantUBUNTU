@@ -89,10 +89,6 @@
 *.background     : monokai_background
 *.cursorColor    : monokai_cursorColor
 
-xterm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
-xterm*termName: xterm-color
-xterm*eightBitInput: false
-
 Xft.dpi: 192
 Xft.autohint: 0
 Xft.lcdfilter: lcddefault
@@ -137,6 +133,9 @@ xterm*savelines: 16384
 
 ! double-click to select whole URLs :D
 xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+xterm*termName: xterm-color
+xterm*eightBitInput: false
+
 
 ! DOS-box colours...
 xterm*foreground: rgb:a8/a8/a8

@@ -94,6 +94,7 @@ instantOSPackages() {
       cd_do src/instantDEB/ sudo cp -r etc /etc
       cd_do ./ cp xprofile ~/.xprofile
       cd_do ./ cp Xresources ~/.Xresources
+      xrdb ~/.Xresources
 }
 
 cd_do() {
