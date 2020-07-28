@@ -7,7 +7,7 @@ install() {
         echo "requires root access to install packages"
         exit
     fi
-    rm -f "$logfile" && touch "$logfile"
+    echo > "$logfile" 
     logdo "Installation Begin @ $(date -I)-$(date +"%T.%3N")"
     # Tasks
     {
@@ -21,6 +21,15 @@ install() {
         download instantOSFiles
         compile  instantOSPackages
     } |& echo_progess
+}
+
+# read from stdin
+echo_progess() {
+    if command -v tqdm >& /dev/null ; then
+        tqdm --tee --total 9 --desc "Progress" > /dev/null
+    else
+        xargs -l1 echo
+    fi
 }
 
 download() {
@@ -41,14 +50,18 @@ compile() {
 
 bootstrap() {
     apt update
-    # apt install python3-tqdm
+    apt install -y python3-pip
     pip3 install -U 'git+https://github.com/tqdm/tqdm@cli-tee#egg=tqdm'
     git submodule update --init --recursive
 }
 
 aptPackages() {
     apt install -y fzf expect git os-prober dialog imvirt lshw bash curl
-    apt install -y dunst lxpolkit xdotool compton lightdm
+    apt install -y dunst lxpolkit xdotool compton
+}
+
+terminal() {
+    apt install -y gnome-terminal
 }
 
 media-player() {
@@ -80,7 +93,7 @@ instantOSFiles() {
 }
 
 instantOSPackages() {
-      cd_do src/instaWM/ make install -j$(nproc)
+      cd_do src/instantWM/ make install -j$(nproc)
       cd_do src/xmenu/ make install -j$(nproc)
       cd_do src/instantDEB/ cp -r usr /usr
       cd_do src/instantDEB/ cp -r etc /etc
@@ -91,15 +104,6 @@ cd_do() {
     shift 1
     "$@"
     cd - >& /dev/null
-}
-
-# read from stdin
-echo_progess() {
-    if command -v tqdm >& /dev/null ; then
-        tqdm --tee --total 8 --desc "Progress" > /dev/null
-    else
-        xargs -l1 echo
-    fi
 }
 
 # log and does the operation
