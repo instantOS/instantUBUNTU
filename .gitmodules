@@ -82,3 +82,6 @@
 [submodule "src/xmenu"]
 	path = src/xmenu
 	url = https://github.com/piping/xmenu
+[submodule "src/instantDEB"]
+	path = src/instantDEB
+	url = https://github.com/instantOS/instantDEB.git
