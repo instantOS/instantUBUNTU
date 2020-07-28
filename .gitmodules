@@ -79,3 +79,6 @@
 [submodule "src/instantthemes"]
 	path = src/instantthemes
 	url = https://github.com/instantOS/instantthemes.git
+[submodule "src/xmenu"]
+	path = src/xmenu
+	url = https://github.com/piping/xmenu
