@@ -4,8 +4,7 @@ logfile="log.install.log"
 
 install() {
     if ! whoami | grep -iq '^root'; then
-        sudo echo || echo "requires root access to install packages"
-        exit
+        sudo echo || die "requires root access to install packages"
     fi
     echo > "$logfile"
     logdo "Installation Begin @ $(date -I)-$(date +"%T.%3N")"
@@ -138,6 +137,11 @@ spinner() {
     done
     printf "\b ..."
     tput cnorm
+}
+
+die() {
+    echo "$1"
+    exit 1
 }
 
 restoreState() {
