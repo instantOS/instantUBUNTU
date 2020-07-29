@@ -1,0 +1,36 @@
+* {
+    spacing:                     0;
+    border:                      0;
+    background-color:            rgba(113, 176, 244, 1);
+    font:                        "Ubuntu Mono bold 12";
+    text-color:                  rgba ( 45, 49, 66, 100 % );
+}
+window {
+    padding:          20;
+    background-color: rgba(56, 145, 240, 1);
+    border-radius:    12px;
+    fullscreen:	      false;
+    transparency:     "screenshot";
+    width:            30%;
+}
+mainbox {
+    padding: 10;
+    border-radius: 6px;
+}
+textbox {
+    padding: 10px 10px 10px;
+    border-radius:10px;
+}
+inputbar {
+    padding:    0px ;
+    children:   [ prompt,textbox-prompt-colon,entry,overlay,case-indicator ];
+}
+prompt {
+}
+textbox-prompt-colon {
+    expand:     false;
+}
+entry {
+}
+case-indicator {
+}
