@@ -66,29 +66,6 @@
 #define monokai_background    #221e2d
 #define monokai_cursorColor   #e3bf21
 
-*.color0         : monokai_color0
-*.color1         : monokai_color1
-*.color2         : monokai_color2
-*.color3         : monokai_color3
-*.color4         : monokai_color4
-*.color5         : monokai_color5
-*.color6         : monokai_color6
-*.color7         : monokai_color7
-*.color8         : monokai_color8
-*.color9         : monokai_color9
-*.color10        : monokai_color10
-*.color11        : monokai_color11
-*.color12        : monokai_color12
-*.color13        : monokai_color13
-*.color14        : monokai_color14
-*.color15        : monokai_color15
-*.colorBD        : monokai_colorBD
-*.colorIT        : monokai_colorIT
-*.colorUL        : monokai_colorUL
-*.foreground     : monokai_foreground
-*.background     : monokai_background
-*.cursorColor    : monokai_cursorColor
-
 Xft.dpi: 192
 Xft.autohint: 0
 Xft.lcdfilter: lcddefault
@@ -115,50 +92,44 @@ xmenu.font: Ubuntu Mono:style=Regular
 /* xmenu.separator: */ 
 /* xmenu.gap: */ 
 /* xmenu.width: */ 
-/* xmenu.height: */ 
-/* xmenu.borderWidth: */ 
+xmenu.height: 60
+xmenu.borderWidth: 5
 /* xmenu.separatorWidth: */ 
 
 
+xterm*scrollTtyOutput:   false
+xterm*loginshell:        true
+xterm*savelines:         16384
+xterm*charClass:         33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+xterm*termName:          xterm-color
+xterm*eightBitInput:     false
+xterm*selectToClipboard: true
+xterm*faceName:          Ubuntu Mono
+xterm*faceSize:          12
+xterm*color0:            monokai_color0
+xterm*color1:            monokai_color1
+xterm*color2:            monokai_color2
+xterm*color3:            monokai_color3
+xterm*color4:            monokai_color4
+xterm*color5:            monokai_color5
+xterm*color6:            monokai_color6
+xterm*color7:            monokai_color7
+xterm*color8:            monokai_color8
+xterm*color9:            monokai_color9
+xterm*color10:           monokai_color10
+xterm*color11:           monokai_color11
+xterm*color12:           monokai_color12
+xterm*color13:           monokai_color13
+xterm*color14:           monokai_color14
+xterm*color15:           monokai_color15
+xterm*colorBD:           monokai_colorBD
+xterm*colorIT:           monokai_colorIT
+xterm*colorUL:           monokai_colorUL
+xterm*foreground:        monokai_foreground
+xterm*background:        monokai_background
+xterm*cursorColor:       monokai_cursorColor
 
-! Use a nice truetype font and size by default...
-xterm*faceName: Ubuntu Mono
-xterm*faceSize: 12
-
-! Every shell is a login shell by default (for inclusion of all necessary environment variables)
-xterm*loginshell: true
-
-! I like a LOT of scrollback...
-xterm*savelines: 16384
-
-! double-click to select whole URLs :D
-xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
-xterm*termName: xterm-color
-xterm*eightBitInput: false
-
-
-! DOS-box colours...
-xterm*foreground: rgb:a8/a8/a8
-xterm*background: rgb:00/00/00
-xterm*color0: rgb:00/00/00
-xterm*color1: rgb:a8/00/00
-xterm*color2: rgb:00/a8/00
-xterm*color3: rgb:a8/54/00
-xterm*color4: rgb:00/00/a8
-xterm*color5: rgb:a8/00/a8
-xterm*color6: rgb:00/a8/a8
-xterm*color7: rgb:a8/a8/a8
-xterm*color8: rgb:54/54/54
-xterm*color9: rgb:fc/54/54
-xterm*color10: rgb:54/fc/54
-xterm*color11: rgb:fc/fc/54
-xterm*color12: rgb:54/54/fc
-xterm*color13: rgb:fc/54/fc
-xterm*color14: rgb:54/fc/fc
-xterm*color15: rgb:fc/fc/fc
-
-! stop output to terminal from jumping down to bottom of scroll again
-xterm*scrollTtyOutput: false
-
+rofi.font: Ubuntu Mono 12
+rofi.dpi: 1
 
 ! vim: set ft=xdefaults :

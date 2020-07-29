@@ -2,6 +2,18 @@
 
 set -e
 
+f="$HOME/.config/instantos/xmenu.sh"
+if [ ! -f "$f" ]; then
+    mkdir -p "$(dirname $f)"
+    cp /usr/bin/xmenu.sh "$f"
+    chmod 0700 "$f"
+fi
+if [ "$f" != "$0" ]; then
+    # only execute user version
+    "$f" "$@"
+    exit $?
+fi
+
 menu_edit() {
   gedit "$f"
 }
@@ -64,35 +76,32 @@ networkIP() {
 
 showdate() {
     xsetroot -name "$(date +"%Y-%b-%d %k:%M")"
-    echo "$(date)"
+    echo "$(date) 中文"
+}
+
+launchpad() {
+    rofi -modi drun -show drun -dpi 192
 }
 
 help() {
     cat <<EOF
 	help doc for you
-	echo -n right click to have music echo -n right click to have music
-	echo -n right click to have music
+	Ctrl+Space to Switch InputMethod
+	Super+Space to lanuch applications
 EOF
 }
 
 releasemem() {
-    echo $USER
-    sync
-    echo 3 > /proc/sys/vm/drop_caches && {
-      notify-send "Memory Released" "Available Memory: $(free_mem)"
+    SUDO_ASKPASS=/usr/bin/rofi-pass sudo -A sh -c "sync; /usr/bin/echo 3 > /proc/sys/vm/drop_caches" && {
+        notify-send "Available Memory Now:" "$(free_mem)"
     }
 }
 
-f="$HOME/.config/instantos/xmenu.sh"
-if [ ! -z $1 ] ; then
-       if [ "$f" != "$0" ]; then
-           "$f" "$@"
-       else
-           echo [instantos] "$@"
-           "$@"
-       fi
+[ "$f" = "$0" ] && [ ! -z $1 ] && {
+    echo [instantos] "$@"
+    "$@"
     exit $?
-fi
+}
 
 # format: Name <Tab> CMD
 # format: CMD
@@ -105,14 +114,16 @@ $(showdate)
 Help
 $(help)
 
-Applications	rofi -show drun -dpi 192
-WebBrowser	firefox
-FileBrowser	xterm -e ranger
+Applications
+	Web Browser	firefox
+	File Browser	xterm -e ranger
+	LaunchPad	"$0" launchpad
 
 Terminal (sudo)	xterm -e sudo su
 
 Setting
 	Edit this Menu   	"$0" menu_edit
+	Edit Windows Manager	"$0" gedit ~/code/gui/dwm/config.h
 	Bluetooth	xterm -e bluetoothctl
 	Network	xterm -e nmtui
 
