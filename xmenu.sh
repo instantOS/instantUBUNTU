@@ -92,9 +92,13 @@ EOF
 }
 
 releasemem() {
-    SUDO_ASKPASS=/usr/bin/rofi-pass sudo -A sh -c "sync; /usr/bin/echo 3 > /proc/sys/vm/drop_caches" && {
+    menu_sudo sh -c "sync; /usr/bin/echo 3 > /proc/sys/vm/drop_caches" && {
         notify-send "Available Memory Now:" "$(free_mem)"
     }
+}
+
+menu_sudo() {
+    SUDO_ASKPASS=/usr/bin/rofi-pass sudo -A "$@"
 }
 
 [ "$f" = "$0" ] && [ ! -z $1 ] && {
@@ -119,7 +123,7 @@ Applications
 	File Browser	xterm -e ranger
 	LaunchPad	"$0" launchpad
 
-Terminal (sudo)	xterm -e sudo su
+Terminal (sudo)	"$0" menu_sudo xterm
 
 Setting
 	Edit this Menu   	"$0" menu_edit

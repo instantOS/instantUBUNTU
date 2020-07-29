@@ -1,2 +1,2 @@
 #!/bin/sh
-rofi -dmenu -p "$1" -password -width 30 -lines 0
+rofi -dmenu -p "$1" -password -width 30 -lines 0 -theme ~/.config/instantos/rofi-pass.rasi
