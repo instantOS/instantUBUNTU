@@ -18,6 +18,12 @@ menu_edit() {
   gedit "$f"
 }
 
+window_manager_edit() {
+  cd ~/code/gui/dwm
+  gedit ~/code/gui/dwm/config.h
+  menu_sudo xterm -e vim +"make install -j"
+}
+
 free_mem() {
     free | awk '/Mem/ {printf "%d GB/%d GB\n", $4/1024/1024, $2/1024/1024.0}'
 }
@@ -71,12 +77,12 @@ gedit() {
 }
 
 networkIP() {
-    notify-send "Your Public IP" "$(curl ifconfig.me)"
+    notify-send "Your PublicIP" "$(curl ifconfig.me)"
 }
 
 showdate() {
-    xsetroot -name "$(date +"%Y-%b-%d %k:%M")"
-    echo "$(date) 中文"
+    xsetroot -name "$(date)🤣"
+    echo "$(LANG=zh_CN.utf8 date)  "
 }
 
 launchpad() {
@@ -101,6 +107,24 @@ menu_sudo() {
     SUDO_ASKPASS=/usr/bin/rofi-pass sudo -A "$@"
 }
 
+display() {
+    xrandr | awk '/ primary/ { print $4 }' | cut -d'+' -f1
+}
+
+menu_resolution() {
+    for mon in $(xrandr | awk '/ connected/ {print $1}')
+    do
+        printf "\t${mon} Resolution   \n"
+        xrandr | awk -v monitor="^DisplayPort-0 connected" '
+          /connected/ {p=0}; $0 ~ monitor {p=1}; p {print "\t\t", $1, "   \t", "xrandr -s ", $1}' | sed -n '2,$p'
+        # DPI setting
+        printf "\t%s %s\n" ${mon} "$(sed -n '/Xft.dpi/p' ~/.Xresources)"
+        for factor in 96 120 144 168 192 ; do
+            printf "\t\t%s  \t%s\n" "$factor" "sed -i '/Xft.dpi/d ; /Xft.autohint/ i Xft.dpi:$factor' ~/.Xresources ; xrdb ~/.Xresources"
+        done
+    done
+}
+
 [ "$f" = "$0" ] && [ ! -z $1 ] && {
     echo [instantos] "$@"
     "$@"
@@ -115,7 +139,7 @@ menu_sudo() {
 cat <<EOF | xmenu | sh &
 $(showdate)
 
-Help
+Help 帮助ヾ(*Őฺ∀Őฺ*)ﾉ
 $(help)
 
 Applications
@@ -127,11 +151,14 @@ Terminal (sudo)	"$0" menu_sudo xterm
 
 Setting
 	Edit this Menu   	"$0" menu_edit
-	Edit Windows Manager	"$0" gedit ~/code/gui/dwm/config.h
+	Edit Windows Manager	"$0" window_manager_edit
 	Bluetooth	xterm -e bluetoothctl
-	Network	xterm -e nmtui
+	Network Manager	xterm -e nmtui
 
-Volume: $(volume)
+Display: $(display)
+$(menu_resolution)
+
+Volume:  $(volume)
 	Mute    	amixer -D pulse sset Master 0%
 	20%	amixer -D pulse sset Master 20%
 	40%	amixer -D pulse sset Master 40%
@@ -139,12 +166,12 @@ Volume: $(volume)
 	80%	amixer -D pulse sset Master 80%
 	100%	amixer -D pulse sset Master 100%
 	More	pavucontrol
-Memory: $(free_mem)
-	Relase Memory	"$0" releasemem
+Memory:  $(free_mem)
+	Relase Memory   	"$0" releasemem
 Network: $(ip -br a | grep wlp5s0 | awk '{print $3,"    "}')
 	Gateway: $(ip route | grep default | awk '{print $3,"    "}')
 	What is my public IP?	"$0" networkIP
-VPN: (off)
+	VPN: (off)
 
 Screenshot	"$0" screenshot
 ScreenRecord	"$0" record

@@ -69,33 +69,26 @@
 Xft.dpi: 192
 Xft.autohint: 0
 Xft.lcdfilter: lcddefault
-Xft.hintstyle: hintslight
+Xft.hintstyle: hintfull
 Xft.hinting: 1
 Xft.antialias: 1
-Xft.rgba: rgb
+Xft.rgba: rgba
 
 *.font: mono:pixelsize=28:antialias=true:autohint=true:dpi=192
 *.font2: mono:pixelsize=24:antialias=true:autohint=true:dpi=192
 
-*.font1: UbuntuMono Nerd Font Mono:monospace:size=9
-
-/* xmenu.font: Ubuntu Mono:style=Regular */
-/* xmenu.font: DejaVuSansMono.ttf: DejaVu Sans Mono:style=Book */
-/* xmenu.font: Noto Sans Mono CJK SC:style=Regular */
-/* xmenu.font: YaHei Consolas Hybrid:style=YaHei Consolas Hybrid Regular */
-xmenu.font: Ubuntu Mono:style=Regular
-/* xmenu.background: */ 
-/* xmenu.foreground: */ 
-/* xmenu.selbackground: */ 
-/* xmenu.selforeground: */ 
-/* xmenu.border: */ 
-/* xmenu.separator: */ 
-/* xmenu.gap: */ 
-/* xmenu.width: */ 
+xmenu.font: Ubuntu Mono:style=Regular,Noto Sans Mono CJK SC:style=Regular,Noto Color Emoji:style=Regular
 xmenu.height: 60
-xmenu.borderWidth: 5
-/* xmenu.separatorWidth: */ 
-
+xmenu.borderWidth: 10
+xmenu.background: monokai_background
+xmenu.foreground: monokai_foreground
+xmenu.border:     monokai_color4
+! xmenu.selbackground: 
+! xmenu.selforeground: 
+! xmenu.separator: 
+! xmenu.gap: 
+! xmenu.width: 
+! xmenu.separatorWidth:
 
 xterm*scrollTtyOutput:   false
 xterm*loginshell:        true

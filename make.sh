@@ -48,23 +48,26 @@ compile() {
 }
 
 bootstrap() {
+    # sudo apt-get install aptitude ubuntu-minimal
+    # sudo aptitude markauto '~i!~nubuntu-minimal'
+    # sudo apt install linux-image-generic
     sudo apt update
-    sudo apt install -y python3-pip
+    sudo apt install -y python3-pip git
     pip3 install -U 'git+https://github.com/tqdm/tqdm@cli-tee#egg=tqdm'
     git submodule update --init --recursive
 }
 
 aptPackages() {
-    sudo apt install -y fzf expect git os-prober dialog imvirt lshw bash curl
-    sudo apt install -y dunst lxpolkit xdotool compton xterm
+    sudo apt install -y fzf expect imvirt lshw
+    sudo apt install -y xrandr xdotool xterm xclip xwallpaper rofi dunst
 }
 
 media-player() {
-    sudo apt install -y mpv slop maim mupdf xwallpaper #muti-media
+    sudo apt install -y mpv slop maim mupdf #muti-media
 }
 
 text-editor() {
-    sudo apt install vim
+    sudo apt install -y vim
     sudo apt install -y scite # gui super lightweight gui text editor (alt. featherpad)
 }
 
@@ -78,8 +81,8 @@ download-tools() {
 
 build-tools() {
     # for tools need be compiled from sources (e.g. windows manager)
-    sudo apt install -y build-essential libx11-dev xorg-dev
-    sudo apt install -y libimlib2-dev
+    sudo apt install -y build-essential libx11-dev xorg-dev #dwm
+    sudo apt install -y libimlib2-dev #xmenu
 }
 
 instantOSFiles() {
@@ -88,12 +91,15 @@ instantOSFiles() {
 }
 
 instantOSPackages() {
+      local -r config=$HOME/.config/instantos/
+      mkdir -p "$config"
       cd_do src/instantWM/ sudo make install -j$(nproc)
       cd_do src/xmenu/ sudo make install -j$(nproc)
       cd_do src/instantDEB/ sudo cp -r usr /usr
       cd_do src/instantDEB/ sudo cp -r etc /etc
-      cd_do ./ cp xprofile ~/.xprofile
-      cd_do ./ cp Xresources ~/.Xresources
+      cp rofi-pass.rasi "$config"
+      cp xprofile ~/.xprofile
+      cp Xresources ~/.Xresources
       xrdb ~/.Xresources
 }
 

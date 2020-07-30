@@ -2,7 +2,7 @@
     spacing:                     0;
     border:                      0;
     background-color:            rgba(113, 176, 244, 1);
-    font:                        "Ubuntu Mono bold 12";
+    font:                        "Ubuntu Mono bold 16";
     text-color:                  rgba ( 45, 49, 66, 100 % );
 }
 window {
