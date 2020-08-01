@@ -42,6 +42,17 @@ notify_dpi_change() {
     notify-send --hint=string:x-dunst-stack-tag:display "Your Display DPI Changed." "Restart your applications"
 }
 
+notify_dpi_check() {
+    menu_sudo get-edid 2>/dev/null | parse-edid 2>/dev/null | grep DisplaySize | {
+       read P X Y
+       export X Y
+       xrandr | awk '/ primary/ { print $4 }' | cut -d'+' -f1 | tr 'x' ' ' | {
+         read W H
+         notify-send --hint=string:x-dunst-stack-tag:display "Your Real DPI is " $(printf "%s/(%s/10/2.54)\n" $W $X | bc)
+       }
+    }
+}
+
 record() {
     echo $(slop -f "%x %y %w %h %g %i") | {
         # each piped command run in subshell
@@ -111,19 +122,21 @@ menu_sudo() {
 
 display() {
     xrandr | awk '/ primary/ { print $4 }' | cut -d'+' -f1
+    # xrandr | awk '/ primary/ { print $(NF-2),"x", $(NF) }' | tr -d 'm'
 }
 
 menu_resolution() {
     for mon in $(xrandr | awk '/ connected/ {print $1}')
     do
         printf "\t${mon} Resolution   \n"
-        xrandr | awk -v monitor="^DisplayPort-0 connected" '
+        xrandr | awk -v monitor="^${mon} connected" '
           /connected/ {p=0}; $0 ~ monitor {p=1}; p {print "\t\t", $1, "   \t", "xrandr -s ", $1}' | sed -n '2,$p'
         # DPI setting
         printf "\t%s %s\n" ${mon} "$(sed -n '/Xft.dpi/p' ~/.Xresources)"
         for factor in 96 120 144 168 192 ; do
             printf "\t\t%s  \t%s\n" "$factor" "sed -i '/Xft.dpi/d ; /Xft.autohint/ i Xft.dpi:$factor' ~/.Xresources ; xrdb ~/.Xresources ; $0 notify_dpi_change"
         done
+        printf "\t\tPrecise DPI \t%s" "$0 notify_dpi_check"
     done
 }
 

@@ -58,7 +58,7 @@ bootstrap() {
 }
 
 aptPackages() {
-    sudo apt install -y fzf expect imvirt lshw
+    sudo apt install -y fzf expect imvirt lshw read-edid
     sudo apt install -y xrandr xdotool xterm xclip xwallpaper rofi dunst
     sudo apt-get install herbstluftwm --no-install-recommends
 }
@@ -98,6 +98,7 @@ instantOSSystem() {
       cd_do src/instantDEB/ sudo cp -r etc /etc
       cd_do src/instantWM/ sudo make install -j$(nproc)
       cd_do src/xmenu/ sudo make install -j$(nproc)
+      cd_do core/ sudo cp xmenu.sh /usr/bin/
       cd_do core/ sudo cp rofi-sudo /usr/bin/
 }
 
@@ -105,8 +106,15 @@ instantOSUser() {
       local -r configdir=$HOME/.config/instantos/
       mkdir -p "$configdir"
       link core/rofi-sudo.rasi "$configdir/rofi-sudo.rasi"
+      link core/xmenu.sh "$configdir/xmenu.sh"
+      link core/dunstrc "$HOME/.config/dunst/dunstrc"
       link core/xprofile ~/.xprofile
       link core/Xresources ~/.Xresources
+      [ -z "${DISPLAY+x}" ] || {
+          xrdb ~/.Xresources
+          pkill dunst
+          dunst &
+      }
 }
 
 link() {
@@ -114,7 +122,7 @@ link() {
     mkdir -p "$backupdir"
     from="$1"
     to="$2"
-    if [ -f "$to" ]; then
+    if [ -e "$to" ]; then
         cp "$to" "$backupdir"
         rm -fr "$to"
     fi
