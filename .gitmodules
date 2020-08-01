@@ -85,3 +85,9 @@
 [submodule "src/instantDEB"]
 	path = src/instantDEB
 	url = https://github.com/instantOS/instantDEB.git
+[submodule "src/mupdf"]
+	path = src/mupdf
+	url = git://git.ghostscript.com/mupdf.git
+[submodule "src/herbstluftwm"]
+	path = src/herbstluftwm
+	url = https://github.com/herbstluftwm/herbstluftwm.git

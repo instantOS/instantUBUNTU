@@ -17,8 +17,8 @@ install() {
         download input-method
         download build-tools
         download aptPackages
-        download instantOSFiles
-        compile  instantOSPackages
+        download instantOSSystem
+        process  instantOSUser
     } |& echo_progess
 }
 
@@ -39,7 +39,7 @@ download() {
     done
 }
 
-compile() {
+process() {
     while ! logdo Compile "$@"
     do
         echo "[instantOS][Error: fail to process instantOS package file, please review $logfile]"
@@ -60,10 +60,15 @@ bootstrap() {
 aptPackages() {
     sudo apt install -y fzf expect imvirt lshw
     sudo apt install -y xrandr xdotool xterm xclip xwallpaper rofi dunst
+    sudo apt-get install herbstluftwm --no-install-recommends
 }
 
 media-player() {
     sudo apt install -y mpv slop maim mupdf #muti-media
+}
+
+media-editing() {
+    sudo apt install -y gimp gimp-help gimp-data-extras
 }
 
 text-editor() {
@@ -73,6 +78,7 @@ text-editor() {
 
 input-method() {
     sudo apt install -y fcitx fcitx-libpinyin # input method framework
+    sudo apt install -y fcitx-frontend-gtk3 # firefox need this
 }
 
 download-tools() {
@@ -85,22 +91,30 @@ build-tools() {
     sudo apt install -y libimlib2-dev #xmenu
 }
 
-instantOSFiles() {
+instantOSSystem() {
       cd_do src/instantDEB/ ./make.sh download
       cd_do src/instantDEB/ ./make.sh unpack
-}
-
-instantOSPackages() {
-      local -r config=$HOME/.config/instantos/
-      mkdir -p "$config"
       cd_do src/instantWM/ sudo make install -j$(nproc)
       cd_do src/xmenu/ sudo make install -j$(nproc)
       cd_do src/instantDEB/ sudo cp -r usr /usr
       cd_do src/instantDEB/ sudo cp -r etc /etc
-      cp rofi-pass.rasi "$config"
-      cp xprofile ~/.xprofile
-      cp Xresources ~/.Xresources
-      xrdb ~/.Xresources
+}
+
+instantOSUser() {
+      local -r config=$HOME/.config/instantos/
+      mkdir -p "$config"
+      link rofi-sudo.rasi "$config"
+      link xprofile ~/.xprofile
+      link Xresources ~/.Xresources
+}
+
+link() {
+    dname="backup/$(date +%T).$(date +%H-%M)"
+    if [ -f "$2" ]; then
+        cp "$2" "$dname"
+        rm -fr "$2"
+    fi
+    ln "$1" "$2"
 }
 
 cd_do() {

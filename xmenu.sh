@@ -19,9 +19,11 @@ menu_edit() {
 }
 
 window_manager_edit() {
-  cd ~/code/gui/dwm
-  gedit ~/code/gui/dwm/config.h
-  menu_sudo xterm -e vim +"make install -j"
+  gedit ~/.config/herbstluftwm/autostart
+  herbstclient emit_hook reload
+  # cd ~/code/gui/dwm
+  # gedit ~/
+  # menu_sudo xterm -e vim +"make install -j"
 }
 
 free_mem() {
@@ -29,7 +31,15 @@ free_mem() {
 }
 
 volume() {
-    printf "%s(%s)" $(amixer get -D pulse Master | awk -F'[][]' 'END {print $2," ",$4}')
+    printf "%s (%s)" $(amixer get -D pulse Master | awk -F'[][]' 'END {print $2," ",$4}')
+}
+
+notify_volume() {
+    notify-send --hint=string:x-dunst-stack-tag:volume "Volume: $(volume)"
+}
+
+notify_dpi_change() {
+    notify-send --hint=string:x-dunst-stack-tag:display "Your Display DPI Changed." "Restart your applications"
 }
 
 record() {
@@ -56,7 +66,7 @@ screenshot() {
     local file="screenshot-$(date -I)-$(date +%T).png"
     {
         maim -s | tee "$HOME/Pictures/$file" | xclip -selection clipboard -t image/png
-    } && notify-send "$file" "Copied to clipboard.\nSaved to $HOME/Pictures"
+    } && notify-send "$file" "Copied to clipboard.\nSaved to ~/Pictures"
 }
 
 terminal() {
@@ -81,20 +91,12 @@ networkIP() {
 }
 
 showdate() {
-    xsetroot -name "$(date)🤣"
+    xsetroot -name  "$(LANG=zh_CN.utf8 date)"
     echo "$(LANG=zh_CN.utf8 date)  "
 }
 
 launchpad() {
-    rofi -modi drun -show drun -dpi 192
-}
-
-help() {
-    cat <<EOF
-	help doc for you
-	Ctrl+Space to Switch InputMethod
-	Super+Space to lanuch applications
-EOF
+    rofi -modi keys,drun,ssh,window,run -show window -dpi 192
 }
 
 releasemem() {
@@ -104,7 +106,7 @@ releasemem() {
 }
 
 menu_sudo() {
-    SUDO_ASKPASS=/usr/bin/rofi-pass sudo -A "$@"
+    SUDO_ASKPASS=/usr/bin/rofi-sudo sudo -A "$@"
 }
 
 display() {
@@ -120,9 +122,23 @@ menu_resolution() {
         # DPI setting
         printf "\t%s %s\n" ${mon} "$(sed -n '/Xft.dpi/p' ~/.Xresources)"
         for factor in 96 120 144 168 192 ; do
-            printf "\t\t%s  \t%s\n" "$factor" "sed -i '/Xft.dpi/d ; /Xft.autohint/ i Xft.dpi:$factor' ~/.Xresources ; xrdb ~/.Xresources"
+            printf "\t\t%s  \t%s\n" "$factor" "sed -i '/Xft.dpi/d ; /Xft.autohint/ i Xft.dpi:$factor' ~/.Xresources ; xrdb ~/.Xresources ; $0 notify_dpi_change"
         done
     done
+}
+
+manual_page() {
+  xterm -e man $@
+}
+
+help() {
+    cat <<EOF
+	help doc for you
+	Ctrl+Space to Switch InputMethod
+	Ctrl+\` to view past notification
+	Super+Space to change Layout of the current frame
+	MuPDF 使用帮助	"$0" manual_page mupdf
+EOF
 }
 
 [ "$f" = "$0" ] && [ ! -z $1 ] && {
@@ -146,6 +162,7 @@ Applications
 	Web Browser	firefox
 	File Browser	xterm -e ranger
 	LaunchPad	"$0" launchpad
+Opened Window	rofi -show window
 
 Terminal (sudo)	"$0" menu_sudo xterm
 
@@ -154,7 +171,6 @@ Setting
 	Edit Windows Manager	"$0" window_manager_edit
 	Bluetooth	xterm -e bluetoothctl
 	Network Manager	xterm -e nmtui
-
 Display: $(display)
 $(menu_resolution)
 
@@ -177,7 +193,7 @@ Screenshot	"$0" screenshot
 ScreenRecord	"$0" record
 $(recordStop)
 
-Suspend	systemctl suspend; i3lock
+Suspend	systemctl suspend; i3lock -i ~/code/gui/wallpapers/PinkGirl.jpg
 Power Menu
 	Shutdown   	poweroff
 	Reboot	reboot
