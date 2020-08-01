@@ -102,15 +102,16 @@ instantOSSystem() {
 }
 
 instantOSUser() {
-      local -r config=$HOME/.config/instantos/
-      mkdir -p "$config"
-      link core/rofi-sudo.rasi "$config"
+      local -r configdir=$HOME/.config/instantos/
+      mkdir -p "$configdir"
+      link core/rofi-sudo.rasi "$configdir/rofi-sudo.rasi"
       link core/xprofile ~/.xprofile
       link core/Xresources ~/.Xresources
 }
 
 link() {
-    backupdir="backup/$(date +%T).$(date +%H-%M)"
+    backupdir="backup/$(date -I).$(date +%H-%M)"
+    mkdir -p "$backupdir"
     from="$1"
     to="$2"
     if [ -f "$to" ]; then
