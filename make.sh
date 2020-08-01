@@ -94,27 +94,31 @@ build-tools() {
 instantOSSystem() {
       cd_do src/instantDEB/ ./make.sh download
       cd_do src/instantDEB/ ./make.sh unpack
-      cd_do src/instantWM/ sudo make install -j$(nproc)
-      cd_do src/xmenu/ sudo make install -j$(nproc)
       cd_do src/instantDEB/ sudo cp -r usr /usr
       cd_do src/instantDEB/ sudo cp -r etc /etc
+      cd_do src/instantWM/ sudo make install -j$(nproc)
+      cd_do src/xmenu/ sudo make install -j$(nproc)
+      cd_do core/ sudo cp rofi-sudo /usr/bin/
 }
 
 instantOSUser() {
       local -r config=$HOME/.config/instantos/
       mkdir -p "$config"
-      link rofi-sudo.rasi "$config"
-      link xprofile ~/.xprofile
-      link Xresources ~/.Xresources
+      link core/rofi-sudo.rasi "$config"
+      link core/xprofile ~/.xprofile
+      link core/Xresources ~/.Xresources
 }
 
 link() {
-    dname="backup/$(date +%T).$(date +%H-%M)"
-    if [ -f "$2" ]; then
-        cp "$2" "$dname"
-        rm -fr "$2"
+    backupdir="backup/$(date +%T).$(date +%H-%M)"
+    from="$1"
+    to="$2"
+    if [ -f "$to" ]; then
+        cp "$to" "$backupdir"
+        rm -fr "$to"
     fi
-    ln "$1" "$2"
+    # hardlink
+    ln "$from" "$to"
 }
 
 cd_do() {
