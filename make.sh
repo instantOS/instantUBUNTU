@@ -52,8 +52,8 @@ bootstrap() {
     # sudo aptitude markauto '~i!~nubuntu-minimal'
     # sudo apt install linux-image-generic
     sudo apt update
-    sudo apt install -y python3-pip git
-    pip3 install -U 'git+https://github.com/tqdm/tqdm@cli-tee#egg=tqdm'
+    # sudo apt install -y python3-pip git
+    # pip3 install -U 'git+https://github.com/tqdm/tqdm@cli-tee#egg=tqdm'
     git submodule update --init --recursive
 }
 
@@ -149,7 +149,7 @@ logdo() {
     then
         "$cmd" >> $logfile 2>&1  &
         local -r pid="$!"
-        # spinner "$pid"
+        spinner "$pid"
         echo
         wait "$pid" #capture exit code
         return $?

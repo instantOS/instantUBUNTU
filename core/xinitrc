@@ -1,0 +1,19 @@
+xrdb ~/.Xresources
+
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+pkill fcitx
+fcitx &
+
+pkill dunst
+dunst &
+
+setxkbmap -option
+setxkbmap -option caps:escape
+
+BACKGROUND=/usr/share/backgrounds/1041uuu-Shore-Animatio.mp4
+mpv --wid=0 --loop=yes "$BACKGROUND" --hwdec &
+
+exec herbstluftwm
+# vim: set ft=sh :
