@@ -110,6 +110,9 @@ instantOSUser() {
       link core/dunstrc "$HOME/.config/dunst/dunstrc"
       link core/xprofile ~/.xprofile
       link core/Xresources ~/.Xresources
+      link core/xinitrc ~/.xinitrc
+      link core/wallpapers/1041uuu-Shore-Animatio.mp4 /usr/share/backgrounds/
+      link core/wallpapers/NihonJin.jpg /usr/share/backgrounds/
       [ -z "${DISPLAY+x}" ] || {
           xrdb ~/.Xresources
           pkill dunst
