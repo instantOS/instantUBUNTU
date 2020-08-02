@@ -60,7 +60,7 @@ bootstrap() {
 aptPackages() {
     sudo apt install -y fzf expect imvirt lshw read-edid
     sudo apt install -y xrandr xdotool xterm xclip xwallpaper rofi dunst
-    sudo apt-get install herbstluftwm --no-install-recommends
+    sudo apt install herbstluftwm --no-install-recommends
 }
 
 media-player() {
@@ -105,12 +105,14 @@ instantOSSystem() {
 instantOSUser() {
       local -r configdir=$HOME/.config/instantos/
       mkdir -p "$configdir"
+      mkdir -p "$HOME/.config/herbstluftwm"
       link core/rofi-sudo.rasi "$configdir/rofi-sudo.rasi"
       link core/xmenu.sh "$configdir/xmenu.sh"
       link core/dunstrc "$HOME/.config/dunst/dunstrc"
       link core/xprofile ~/.xprofile
       link core/Xresources ~/.Xresources
       link core/xinitrc ~/.xinitrc
+      cd_do core/ sudo cp herbstluftwm-autostart ~/.config/herbstluftwm/autostart
       link core/wallpapers/1041uuu-Shore-Animatio.mp4 /usr/share/backgrounds/
       link core/wallpapers/NihonJin.jpg /usr/share/backgrounds/
       [ -z "${DISPLAY+x}" ] || {

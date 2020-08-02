@@ -39,7 +39,9 @@ notify_volume() {
 }
 
 notify_dpi_change() {
-    notify-send --hint=string:x-dunst-stack-tag:display "Your Display DPI Changed." "Restart your applications"
+    sed -i "/Xft.dpi/d ; /Xft.autohint/ i Xft.dpi:$1" ~/.Xresources
+    xrdb ~/.Xresources
+    notify-send --hint=string:x-dunst-stack-tag:display "Your Display DPI has changed to $1." "Restart your applications if needed"
 }
 
 notify_dpi_check() {
@@ -48,7 +50,9 @@ notify_dpi_check() {
        export X Y
        xrandr | awk '/ primary/ { print $4 }' | cut -d'+' -f1 | tr 'x' ' ' | {
          read W H
-         notify-send --hint=string:x-dunst-stack-tag:display "Your Real DPI is " $(printf "%s/(%s/10/2.54)\n" $W $X | bc)
+         local factor=$(printf "%s/(%s/10/2.54)\n" $W $X | bc)
+         notify-send --hint=string:x-dunst-stack-tag:display "Your Real DPI is " $factor
+         notify_dpi_change $factor
        }
     }
 }
@@ -134,7 +138,7 @@ menu_resolution() {
         # DPI setting
         printf "\t%s %s\n" ${mon} "$(sed -n '/Xft.dpi/p' ~/.Xresources)"
         for factor in 96 120 144 168 192 ; do
-            printf "\t\t%s  \t%s\n" "$factor" "sed -i '/Xft.dpi/d ; /Xft.autohint/ i Xft.dpi:$factor' ~/.Xresources ; xrdb ~/.Xresources ; $0 notify_dpi_change"
+            printf "\t\t%s  \t%s\n" "$factor" "$0 notify_dpi_change $factor"
         done
         printf "\t\tPrecise DPI \t%s" "$0 notify_dpi_check"
     done
