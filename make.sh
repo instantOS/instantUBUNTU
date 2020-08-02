@@ -19,7 +19,7 @@ install() {
         download aptPackages
         download instantOSSystem
         process  instantOSUser
-    } |& echo_progess
+    }
 }
 
 # read from stdin
@@ -73,7 +73,7 @@ media-editing() {
 
 text-editor() {
     sudo apt install -y vim
-    sudo apt install -y scite # gui super lightweight gui text editor (alt. featherpad)
+    sudo apt install -y notepadqq # gui text editor for new users (alt. scite featherpad)
 }
 
 input-method() {
