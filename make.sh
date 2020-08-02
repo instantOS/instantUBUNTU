@@ -100,6 +100,7 @@ instantOSSystem() {
       cd_do src/xmenu/ sudo make install -j$(nproc)
       cd_do core/ sudo cp xmenu.sh /usr/bin/
       cd_do core/ sudo cp rofi-sudo /usr/bin/
+      cd_do core/ sudo cp fonts/* /usr/share/fonts/
 }
 
 instantOSUser() {
