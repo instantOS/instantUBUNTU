@@ -15,14 +15,12 @@ hc keyunbind --all
 # if you have a super key you will be much happier with Mod set to Mod4
 # Mod=Mod1    # Use alt as the main modifier
 Mod=Mod4   # Use the super key as the main modifier
-TERMINAL=st
-BROWSER=firefox
 
 hc keybind $Mod-Shift-q quit
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-q close
-hc keybind $Mod-Return spawn ${TERMINAL:-xterm} # use your $TERMINAL with xterm as fallback
-hc keybind $Mod-Shift-Return spawn ${BROWSER:-firefox} # use your $TERMINAL with xterm as fallback
+hc keybind $Mod-Return spawn xmenu.sh terminal
+hc keybind $Mod-Shift-Return spawn xmenu.sh browser
 hc keybind $Mod-x spawn xmenu.sh
 hc keybind $Mod-d spawn xmenu.sh launchpad
 hc keybind $Mod-r spawn rofi -show drun -modi drun,run

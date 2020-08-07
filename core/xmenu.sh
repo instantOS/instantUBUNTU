@@ -94,7 +94,7 @@ browser() {
 
 gedit() {
     alacritty -e vim "$1" ||
-    scite "$1" ||
+    notepadqq "$1" ||
     xterm -e vim "$1" ||
     st -e vim "$1" ||
     gnome-terminal -e vim "$1" ||
@@ -148,6 +148,26 @@ manual_page() {
   xterm -e man $@
 }
 
+bluetooth() {
+  ~/.config/instantos/rofi-bluetooth
+}
+
+vpnconnect() {
+  # Not perfect
+  local server="$(rofi-prompt 'vpn server: ')"
+  local username="$(rofi-prompt 'vpn username: ')"
+  local passfile="$(mktemp)"
+  local password="$(rofi-sudo 'vpn password: ')"
+  cat "$password" > "$passfile"
+  menu_sudo sh -c "cat $passfile | openconnect \"$server\" -u \"$username\" --passwd-on-stdin"
+  notify-send --hint=string:x-dunst-stack-tag:vpn "Your VPN connected!"
+}
+
+vpndisconnect() {
+  pkill -15 openconnect
+  notify-send --hint=string:x-dunst-stack-tag:vpn "Your VPN disconnected!"
+}
+
 help() {
     cat <<EOF
 	help doc for you
@@ -175,22 +195,20 @@ $(showdate)
 Help 帮助ヾ(*Őฺ∀Őฺ*)ﾉ
 $(help)
 
-Applications
-	Web Browser	firefox
-	File Browser	xterm -e ranger
+App Finder	"$0" launchpad
+	Web Browser   	firefox
+	File Manager  	xterm -e ranger
 	LaunchPad	"$0" launchpad
-Opened Window	rofi -show window
+Opened Window	rofi -show window -dpi 1
 
 Terminal (sudo)	"$0" menu_sudo xterm
 
 Setting
 	Edit this Menu   	"$0" menu_edit
 	Edit Windows Manager	"$0" window_manager_edit
-	Bluetooth	xterm -e bluetoothctl
-	Network Manager	xterm -e nmtui
+
 Display: $(display)
 $(menu_resolution)
-
 Volume:  $(volume)
 	Mute    	amixer -D pulse sset Master 0%
 	20%	amixer -D pulse sset Master 20%
@@ -199,18 +217,25 @@ Volume:  $(volume)
 	80%	amixer -D pulse sset Master 80%
 	100%	amixer -D pulse sset Master 100%
 	More	pavucontrol
-Memory:  $(free_mem)
-	Relase Memory   	"$0" releasemem
+Battery: (Power Comsumption)
 Network: $(ip -br a | grep wlp5s0 | awk '{print $3,"    "}')
-	Gateway: $(ip route | grep default | awk '{print $3,"    "}')
+	Gateway: $(ip route | grep "default via" | head -1 | awk '{print $3,"    "}')
 	What is my public IP?	"$0" networkIP
-	VPN: (off)
+	Bluetooth	"$0" bluetooth
+	VPN On	"$0" vpnconnect
+	VPN Off	"$0" vpndisconnect
+Memory: $(free_mem)   	:
+	Relase Memory   	"$0" releasemem
+System Monitors
+	Overall Monitor  	xterm -e ytop
+	Traffic Monitor  	xterm -e bandwhich
 
 Screenshot	"$0" screenshot
 ScreenRecord	"$0" record
 $(recordStop)
+RemoteCopyPaste	:
 
-Suspend	systemctl suspend; i3lock -i ~/code/gui/wallpapers/PinkGirl.jpg
+Suspend	systemctl suspend; i3lock -i "$HOME/code/gui/wallpapers/PinkGirl.jpg"
 Power Menu
 	Shutdown   	poweroff
 	Reboot	reboot

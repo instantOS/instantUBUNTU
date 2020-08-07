@@ -51,10 +51,10 @@ bootstrap() {
     # sudo apt-get install aptitude ubuntu-minimal
     # sudo aptitude markauto '~i!~nubuntu-minimal'
     # sudo apt install linux-image-generic
-    sudo apt update
     # sudo apt install -y python3-pip git
     # pip3 install -U 'git+https://github.com/tqdm/tqdm@cli-tee#egg=tqdm'
-    git submodule update --init --recursive
+    sudo apt update
+    git submodule update --init
 }
 
 aptPackages() {
