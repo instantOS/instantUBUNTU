@@ -64,7 +64,8 @@ aptPackages() {
 }
 
 media-player() {
-    sudo apt install -y mpv slop maim mupdf #muti-media
+    sudo apt install -y mpv slop maim #muti-media
+    sudo apt install -y okular # pdf, epub, markdown viewer
 }
 
 media-editing() {
